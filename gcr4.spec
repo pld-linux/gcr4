@@ -13,9 +13,9 @@ Source0:	https://download.gnome.org/sources/gcr/4.1/gcr-%{version}.tar.xz
 # Source0-md5:	bb2e957f0ce11a8c527d1d5079ba485f
 URL:		https://gitlab.gnome.org/GNOME/gcr
 BuildRequires:	gettext-tools >= 0.19.8
+BuildRequires:	gi-docgen
 BuildRequires:	glib2-devel >= 1:2.68
 BuildRequires:	gobject-introspection-devel >= 1.34.0
-BuildRequires:	gtk-doc >= 1.9
 BuildRequires:	gtk4-devel >= 4
 BuildRequires:	libgcrypt-devel >= 1.4.5
 BuildRequires:	libsecret-devel >= 0.20
@@ -107,7 +107,6 @@ API gcr i gck dla języka Vala.
 Summary:	gcr and gck API documentation
 Summary(pl.UTF-8):	Dokumentacja API bibliotek gcr i gck
 Group:		Documentation
-Requires:	gtk-doc-common
 Obsoletes:	gnome-keyring-apidocs < 3.3.0
 BuildArch:	noarch
 
