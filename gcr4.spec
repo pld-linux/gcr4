@@ -5,12 +5,12 @@
 Summary:	GObject and GUI library for high level crypto parsing and display
 Summary(pl.UTF-8):	Biblioteka GObject i GUI do wysokopoziomowej analizy i wyświetlania danych kryptograficznych
 Name:		gcr4
-Version:	4.1.0
-Release:	3
+Version:	4.2.0
+Release:	1
 License:	LGPL v2+
 Group:		X11/Applications
-Source0:	https://download.gnome.org/sources/gcr/4.1/gcr-%{version}.tar.xz
-# Source0-md5:	bb2e957f0ce11a8c527d1d5079ba485f
+Source0:	https://download.gnome.org/sources/gcr/4.2/gcr-%{version}.tar.xz
+# Source0-md5:	59259f5cb4e5a799c20db2dcf3d60a8e
 URL:		https://gitlab.gnome.org/GNOME/gcr
 BuildRequires:	gettext-tools >= 0.19.8
 BuildRequires:	gi-docgen
