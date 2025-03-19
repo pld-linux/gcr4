@@ -5,18 +5,19 @@
 Summary:	GObject and GUI library for high level crypto parsing and display
 Summary(pl.UTF-8):	Biblioteka GObject i GUI do wysokopoziomowej analizy i wyświetlania danych kryptograficznych
 Name:		gcr4
-Version:	4.2.1
+Version:	4.4.0.1
 Release:	1
 License:	LGPL v2+
 Group:		X11/Applications
-Source0:	https://download.gnome.org/sources/gcr/4.2/gcr-%{version}.tar.xz
-# Source0-md5:	100f015cd1e4b02894b393c879e8ab9a
+Source0:	https://download.gnome.org/sources/gcr/4.4/gcr-%{version}.tar.xz
+# Source0-md5:	01da4445b5b16801c6dcc7d8945b4cc4
 URL:		https://gitlab.gnome.org/GNOME/gcr
 BuildRequires:	gettext-tools >= 0.19.8
 BuildRequires:	gi-docgen
-BuildRequires:	glib2-devel >= 1:2.68
+BuildRequires:	glib2-devel >= 1:2.74
 BuildRequires:	gobject-introspection-devel >= 1.34.0
 BuildRequires:	gtk4-devel >= 4
+# or gnutls>=3.8.5 with -Dcrypto=gnutls
 BuildRequires:	libgcrypt-devel >= 1.4.5
 BuildRequires:	libsecret-devel >= 0.20
 BuildRequires:	libtasn1-devel
@@ -28,7 +29,7 @@ BuildRequires:	openssh-clients
 BuildRequires:	p11-kit-devel >= 0.19.0
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-build >= 4.6
-BuildRequires:	rpmbuild(macros) >= 2.029
+BuildRequires:	rpmbuild(macros) >= 2.042
 BuildRequires:	systemd-devel
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	vala >= 2:0.20.0
@@ -61,7 +62,7 @@ procesorowe.
 Summary:	gcr and gck libraries
 Summary(pl.UTF-8):	Biblioteki gcr i gck
 Group:		Libraries
-Requires:	glib2 >= 1:2.68
+Requires:	glib2 >= 1:2.74
 Requires:	libgcrypt >= 1.4.5
 Requires:	p11-kit >= 0.19.0
 Obsoletes:	gnome-keyring-libs < 3.3.0
@@ -77,7 +78,7 @@ Summary:	Header files for gcr and gck libraries
 Summary(pl.UTF-8):	Pliki nagłówkowe bibliotek gcr i gck
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
-Requires:	glib2-devel >= 1:2.68
+Requires:	glib2-devel >= 1:2.74
 Requires:	p11-kit-devel >= 0.19.0
 Obsoletes:	gcr-static < 3.36.0
 Obsoletes:	gcr-ui-static < 3.36.0
@@ -120,16 +121,17 @@ Dokumentacja API bibliotek gcr i gck.
 %setup -q -n gcr-%{version}
 
 %build
-%meson build \
+%meson \
 	-Dgpg_path=%{__gpg} \
-	-Dgtk_doc=%{__true_false apidocs}
+	-Dgtk_doc=%{__true_false apidocs} \
+	-Dsystemd=enabled
 
-%ninja_build -C build
+%meson_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%ninja_install -C build
+%meson_install
 
 %if %{with apidocs}
 install -d $RPM_BUILD_ROOT%{_gidocdir}
