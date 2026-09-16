@@ -5,12 +5,12 @@
 Summary:	GObject and GUI library for high level crypto parsing and display
 Summary(pl.UTF-8):	Biblioteka GObject i GUI do wysokopoziomowej analizy i wyświetlania danych kryptograficznych
 Name:		gcr4
-Version:	4.4.0.1
+Version:	4.4.1
 Release:	1
 License:	LGPL v2+
 Group:		X11/Applications
 Source0:	https://download.gnome.org/sources/gcr/4.4/gcr-%{version}.tar.xz
-# Source0-md5:	01da4445b5b16801c6dcc7d8945b4cc4
+# Source0-md5:	da065d4654ea6c33d85dbf86b5fca008
 URL:		https://gitlab.gnome.org/GNOME/gcr
 BuildRequires:	gettext-tools >= 0.19.8
 BuildRequires:	gi-docgen
@@ -169,17 +169,17 @@ rm -rf $RPM_BUILD_ROOT
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libgck-2.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgck-2.so.2
-%attr(755,root,root) %{_libdir}/libgcr-4.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgcr-4.so.4
+%{_libdir}/libgck-2.so.*.*.*
+%ghost %{_libdir}/libgck-2.so.2
+%{_libdir}/libgcr-4.so.*.*.*
+%ghost %{_libdir}/libgcr-4.so.4
 %{_libdir}/girepository-1.0/Gck-2.typelib
 %{_libdir}/girepository-1.0/Gcr-4.typelib
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libgck-2.so
-%attr(755,root,root) %{_libdir}/libgcr-4.so
+%{_libdir}/libgck-2.so
+%{_libdir}/libgcr-4.so
 %{_datadir}/gir-1.0/Gck-2.gir
 %{_datadir}/gir-1.0/Gcr-4.gir
 %{_includedir}/gck-2
