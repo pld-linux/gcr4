@@ -6,7 +6,7 @@ Summary:	GObject and GUI library for high level crypto parsing and display
 Summary(pl.UTF-8):	Biblioteka GObject i GUI do wysokopoziomowej analizy i wyświetlania danych kryptograficznych
 Name:		gcr4
 Version:	4.4.1
-Release:	1
+Release:	2
 License:	LGPL v2+
 Group:		X11/Applications
 Source0:	https://download.gnome.org/sources/gcr/4.4/gcr-%{version}.tar.xz
@@ -38,9 +38,8 @@ Requires(post,preun,postun):	systemd-units >= 1:250.1
 Requires:	gnupg2 >= 2.0
 Requires:	libsecret >= 0.20
 Requires:	systemd-units >= 1:250.1
+Suggests:	%{name}-ssh-agent = %{version}-%{release}
 Conflicts:	gnome-keyring < 3.3.0
-Provides:	gcr = %{version}
-Obsoletes:	gcr < 4
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -104,6 +103,20 @@ gcr and gck API for Vala language.
 %description -n vala-gcr4 -l pl.UTF-8
 API gcr i gck dla języka Vala.
 
+%package ssh-agent
+Summary:	SSH agent using gcr4
+Summary(pl.UTF-8):	Agent SSH wykorzystujący gcr4
+Group:		Applications
+Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}-libs = %{version}-%{release}
+Conflicts:	gcr-ssh-agent
+
+%description ssh-agent
+SSH agent using gcr4.
+
+%description ssh-agent -l pl.UTF-8
+Agent SSH wykorzystujący gcr4.
+
 %package apidocs
 Summary:	gcr and gck API documentation
 Summary(pl.UTF-8):	Dokumentacja API bibliotek gcr i gck
@@ -146,26 +159,23 @@ install -d $RPM_BUILD_ROOT%{_gidocdir}
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post
-%systemd_user_post gcr-ssh-agent.service
-
-%preun
-%systemd_user_preun gcr-ssh-agent.service
-
-%postun
-%systemd_user_postun_with_restart gcr-ssh-agent.service
-
 %post	libs -p /sbin/ldconfig
 %postun	libs -p /sbin/ldconfig
+
+%post ssh-agent
+%systemd_user_post gcr-ssh-agent.service
+
+%preun ssh-agent
+%systemd_user_preun gcr-ssh-agent.service
+
+%postun ssh-agent
+%systemd_user_postun_with_restart gcr-ssh-agent.service
 
 %files -f gcr-4.lang
 %defattr(644,root,root,755)
 %doc CONTRIBUTING.md NEWS README.md
 %attr(755,root,root) %{_bindir}/gcr-viewer-gtk4
-%attr(755,root,root) %{_libexecdir}/gcr-ssh-agent
 %attr(755,root,root) %{_libexecdir}/gcr4-ssh-askpass
-%{systemduserunitdir}/gcr-ssh-agent.service
-%{systemduserunitdir}/gcr-ssh-agent.socket
 
 %files libs
 %defattr(644,root,root,755)
@@ -193,6 +203,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/vala/vapi/gck-2.vapi
 %{_datadir}/vala/vapi/gcr-4.deps
 %{_datadir}/vala/vapi/gcr-4.vapi
+
+%files ssh-agent
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libexecdir}/gcr-ssh-agent
+%{systemduserunitdir}/gcr-ssh-agent.service
+%{systemduserunitdir}/gcr-ssh-agent.socket
 
 %if %{with apidocs}
 %files apidocs
